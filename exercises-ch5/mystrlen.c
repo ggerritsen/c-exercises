@@ -7,7 +7,7 @@ int mystrlen(char input[]) {
   else return 1 + mystrlen(&input[1]);
 }
 
-int main(int argc, char *argv[]) {
+int was_main(int argc, char *argv[]) {
   char userInput[30];
   strcpy(userInput, argv[1]);
 
