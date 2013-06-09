@@ -1,0 +1,4 @@
+1.1 Birth year in binary & hexadecimal notation:
+11111000001
+0x7C1
+
