@@ -4,6 +4,7 @@
 
 #define CHUNK_SIZE (5)
 #define ERROR_OUT_OF_MEMORY (-2)
+#define ERROR_PERSON_NOT_FOUND (-3)
 
 typedef struct {
   char *name;
@@ -57,6 +58,26 @@ const person_t *find_person(const char *name) {
   return NULL;
 }
 
+int remove_person(const char *name) {
+  int i;
+  for (i = 0; i < current_index; i++) {
+    if (!strcmp(database[i].name, name)) {
+      break;
+    }
+  }
+
+  if (i == current_index) {
+    return ERROR_PERSON_NOT_FOUND;
+  }
+
+  finalize_person(&database[i]);
+  for (; i < current_index; i++) {
+    database[i] = database[i + 1];
+  }
+  current_index--;
+  return 0;
+}
+
 int main(void) {
 
   person_t *insertPerson = malloc(sizeof(person_t));
@@ -78,6 +99,11 @@ int main(void) {
   } else {
     printf("Found this person with name %s: [%s, %s]\n", nameToFind, foundPerson->name, foundPerson->address);
   }
+
+  char nameToRemove[256];
+  printf("Remove a person with name:\n");
+  scanf("%s", nameToRemove);
+  printf("Return code when removing: %d\n", remove_person(nameToRemove));
 
   return 0;
 }
