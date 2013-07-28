@@ -47,6 +47,16 @@ int insert_person(const person_t *p) {
   return 0;
 }
 
+const person_t *find_person(const char *name) {
+  int i;
+  for (i = 0; i < current_index; i++) {
+    if (!strcmp(database[i].name, name)) {
+      return &database[i];
+    }  
+  }
+  return NULL;
+}
+
 int main(void) {
 
   person_t *insertPerson = malloc(sizeof(person_t));
@@ -58,5 +68,16 @@ int main(void) {
   init_person(insertPerson, &input[0], &address[0]);
   printf("Inserted person: %s, %s\n", insertPerson->name, insertPerson->address);
   
+  char nameToFind[256];
+  printf("Find a person with name:\n");
+  scanf("%s", nameToFind);
+
+  person_t *foundPerson = find_person(nameToFind);
+  if (!foundPerson) {
+    printf("Did not find a person with name '%s'", nameToFind);
+  } else {
+    printf("Found this person with name %s: [%s, %s]\n", nameToFind, foundPerson->name, foundPerson->address);
+  }
+
   return 0;
 }
