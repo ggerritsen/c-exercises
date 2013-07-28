@@ -78,6 +78,13 @@ int remove_person(const char *name) {
   return 0;
 }
 
+void print_database() {
+  int i;
+  for (i = 0; i < current_size; i++) {
+    printf("%d: %s\n", i, database[i].name);
+  }
+}
+
 int main(void) {
 
   person_t *insertPerson = malloc(sizeof(person_t));
@@ -87,15 +94,18 @@ int main(void) {
   printf("Insert a new person with address\n");
   scanf("%s %s", input, address);
   init_person(insertPerson, &input[0], &address[0]);
+  insert_person(insertPerson);
   printf("Inserted person: %s, %s\n", insertPerson->name, insertPerson->address);
   
+  print_database();
+
   char nameToFind[256];
   printf("Find a person with name:\n");
   scanf("%s", nameToFind);
 
   person_t *foundPerson = find_person(nameToFind);
   if (!foundPerson) {
-    printf("Did not find a person with name '%s'", nameToFind);
+    printf("Did not find a person with name '%s'\n", nameToFind);
   } else {
     printf("Found this person with name %s: [%s, %s]\n", nameToFind, foundPerson->name, foundPerson->address);
   }
@@ -104,6 +114,8 @@ int main(void) {
   printf("Remove a person with name:\n");
   scanf("%s", nameToRemove);
   printf("Return code when removing: %d\n", remove_person(nameToRemove));
+  
+  print_database();
 
   return 0;
 }
